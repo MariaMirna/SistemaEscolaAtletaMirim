@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/modeloSistema.xhtml">
+
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+	
+	<h:form id="frmprofessores">
+
+		<p:dataTable id="tbprofessores" emptyMessage="Nenhum registro encontrado!"
+			value="#{MBProfessores.itens}" var="item" paginator="true" rows="8">
+
+			<f:facet name="header">Lista de Professores</f:facet>
+
+			<p:column headerText="Código" sortBy="#{item.codigo}"
+				filterBy="#{item.codigo}">
+				<h:outputText value="#{item.codigo}" />
+			</p:column>
+
+			<p:column headerText="Nome" sortBy="#{item.nome}"
+				filterBy="#{item.nome}">
+				<h:outputText value="#{item.nome}" />
+			</p:column>
+
+			<p:column headerText="Cpf" sortBy="#{item.cpf}"
+				filterBy="#{item.cpf}">
+				<h:outputText value="#{item.cpf}" />
+			</p:column>
+
+			<p:column headerText="Telefone" sortBy="#{item.telefone}"
+				filterBy="#{item.telefone}">
+				<h:outputText value="#{item.telefone}" />
+			</p:column>
+
+			<p:column headerText="Data de Nascimento"
+				sortBy="#{item.datanascimento}" filterBy="#{item.datanascimento}">
+				<h:outputText value="#{item.datanascimento}" />
+			</p:column>
+
+			<p:column headerText="Data Admissão" sortBy="#{item.dataadmissao}"
+				filterBy="#{item.dataadmissao}">
+				<h:outputText value="#{item.dataadmissao}" />
+			</p:column>
+
+			<f:facet name="footer">
+
+				<p:commandButton value="Novo" actionListener="#{MBProfessores.PrepararNovo}" oncomplete="PF('dlgprofNovo').show();" />
+
+			</f:facet>
+
+		</p:dataTable>
+		
+		</h:form>
+
+
+		<p:dialog widgetVar="dlgprofNovo" cloable="false" draggable="false"
+			resizable="false" header="Cadastrar Professor" modal="true" appendTo="@(body)">
+
+			<h:form>
+				<h:panelGrid columns="1">
+					<p:outputLabel value="Nome: " />
+					<h:inputText size="30" maxlength="50" value="#{MBProfessores.professores.nome}"/>
+
+					<p:outputLabel value="Cpf: " />
+					<h:inputText size="30" maxlength="50" value="#{MBProfessores.professores.cpf}"/>
+
+					<p:outputLabel value="Telefone: " />
+					<h:inputText size="30" maxlength="50" value="#{MBProfessores.professores.telefone}"/>
+
+					<p:outputLabel value="Data de nascimento: " />
+					<h:inputText size="30" maxlength="50" value="#{MBProfessores.professores.datanascimento}"/>
+
+					<p:outputLabel value="Data de admissão: " />
+					<h:inputText size="30" maxlength="50" value="#{MBProfessores.professores.dataadmissao}"/>
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar" actionListener="#{MBProfessores.novo}" 
+					oncomplete="PF('dlgprofNovo').hide();" update=":frmprofessores:tbprofessores"/>
+					<p:commandButton value="Cancelar" onclick="PF('dlgprofNovo').hide();"/>
+				</h:panelGrid>
+
+			</h:form>
+
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+
+
